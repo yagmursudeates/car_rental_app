@@ -9,3 +9,5 @@ ASSUMPTIONS:
 It says "Login with email/password or Google will be supported" in the file, so I assumed it was either one of them
 It says "Web application needs to be hosted on a provider like Azure Apps, Render.com." in the file, so I assumed it could be any hosting website since it says 'like'.
 
+
+Video link: https://drive.google.com/file/d/1LpZKVSA3DIOYZxypHJazEttt22NcOTeF/view?usp=sharing
