@@ -31,7 +31,7 @@
 
 <script>
     function initMap() {
-        const defaultLocation = { lat: 39.92077, lng: 32.85411 }; // Ankara
+        const defaultLocation = { lat: 39.92077, lng: 32.85411 }; 
         let userCity = '';
 
         const map = new google.maps.Map(document.getElementById("map"), {
@@ -57,12 +57,10 @@
                         }
                     });
 
-                    // Kullanıcının şehir bilgisi API'den alınıyor
                     const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${userLocation.lat}&lon=${userLocation.lng}`);
                     const data = await response.json();
                     userCity = data.address.city || data.address.state;
 
-                    // Şehir bilgisini backend'e gönder
                     fetch('/get_location', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -70,7 +68,7 @@
                     }).then(res => res.json())
                       .then(data => {
                           console.log("User city set:", data.city);
-                          location.reload(); // Sayfayı yenileyerek ofisleri filtrele
+                          location.reload(); 
                       });
                 },
                 function (error) {
@@ -86,5 +84,5 @@
     });
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdNxninHvr6OB7GyfCyskh9M0jZZWHkyQ&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&callback=initMap" async defer></script>
 {% endblock %}
