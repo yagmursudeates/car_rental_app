@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <h1><a href="{{ url_for('home') }}" class="custom-header-text">jaybenot</a></h1>
+            <div class="nav-right">
+                <div class="language-switch">
+                    <button class="dropdown-btn">
+                        <img src="{{ url_for('static', filename='images/' + ('engflag.jpeg' if language == 'en' else 'trflag.jpeg')) }}" alt="{{ 'English' if language == 'en' else 'Türkçe' }}" width="20">
+                        <span class="caret"></span>
+                    </button>                    
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('set_language_route', lang='en') }}">
+                            <img src="{{ url_for('static', filename='images/engflag.jpeg') }}" alt="English" width="20"> EN
+                        </a>
+                        <a href="{{ url_for('set_language_route', lang='tr') }}">
+                            <img src="{{ url_for('static', filename='images/trflag.jpeg') }}" alt="Türkçe" width="20"> TR
+                        </a>
+                    </div>
+                </div>
+                
+                {% if is_authenticated(session) %}
+                    <a href="{{ url_for('logout') }}">{{ translations['logout'] }}</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">{{ translations['login'] }}</a>
+                    <a href="{{ url_for('register') }}">{{ translations['register'] }}</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="header-bottom">
+            <form action="{{ url_for('search') }}" method="get" class="search-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pickup-office">{{ translations['pickup_office'] }}</label>
+                        <select name="pickup_office" id="pickup-office" required>
+                            <option value="">Select Pickup Office</option>
+                            {% for office in offices %}
+                                <option value="{{ office.id }}">{{ office.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pickup-date">{{ translations['pickup_date'] }}</label>
+                        <input type="date" name="pickup_date" id="pickup-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pickup-time">{{ translations['pickup_time'] }}</label>
+                        <input type="time" name="pickup_time" id="pickup-time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="return-office">{{ translations['return_office'] }}</label>
+                        <select name="return_office" id="return-office" required>
+                            <option value="">Select Return Office</option>
+                            {% for office in offices %}
+                                <option value="{{ office.id }}">{{ office.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="return-date">{{ translations['return_date'] }}</label>
+                        <input type="date" name="return_date" id="return-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="return-time">{{ translations['return_time'] }}</label>
+                        <input type="time" name="return_time" id="return-time" required>
+                    </div>
+                </div>
+                <button type="submit" class="rent-button">{{ translations['rent_for_days'] }}</button>
+            </form>
+        </div>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

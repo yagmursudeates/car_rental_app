@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div id="officeCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for office in offices %}
+            <div class="carousel-item {% if loop.first %} active {% endif %}">
+                <div class="office-details-container text-center">
+                    <h2>{{ office.name }}</h2>
+                    <div class="office-info mt-3">
+                        <p><strong>Location:</strong> {{ office.location }}</p>
+                        <p><strong>Address:</strong> {{ office.address }}</p>
+                        <p><strong>Phone:</strong> {{ office.phone_no }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Sol ok -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#officeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+
+        <!-- Sağ ok -->
+        <button class="carousel-control-next" type="button" data-bs-target="#officeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+{% endblock %}

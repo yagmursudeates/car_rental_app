@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="search-results-container">
+    <h2>{{ translations['results'] }}</h2>
+    
+    <!-- Sorting and Filtering Section -->
+    <div class="filter-sort">
+        <!-- Sorting Section -->
+        <div class="sort-section">
+            <label for="sort_by">{{ translations['sort_by'] }}:</label>
+            <select id="sort_by" name="sort_by" onchange="applySort()">
+                <option value="cost" {% if request.args.get('sort_by') == 'cost' %}selected{% endif %}>{{ translations['cost'] }}</option>
+                <option value="mileage" {% if request.args.get('sort_by') == 'mileage' %}selected{% endif %}>{{ translations['mileage'] }}</option>
+                <option value="age" {% if request.args.get('sort_by') == 'age' %}selected{% endif %}>{{ translations['age'] }}</option>
+                <option value="rental_cost" {% if request.args.get('sort_by') == 'rental_cost' %}selected{% endif %}>{{ translations['rental_cost'] }}</option>
+            </select>
+        </div>
+
+        <div class="sort-order">
+            <label for="sort_order">{{ translations['sort_order'] }}:</label>
+            <select id="sort_order" name="sort_order" onchange="applySort()">
+                <option value="asc" {% if request.args.get('sort_order') == 'asc' %}selected{% endif %}>{{ translations['ascending'] }}</option>
+                <option value="desc" {% if request.args.get('sort_order') == 'desc' %}selected{% endif %}>{{ translations['descending'] }}</option>
+            </select>
+        </div>
+
+        <!-- Filter by Transmission Section -->
+        <div class="transmission-filter">
+            <label for="filter_transmission">{{ translations['filter_transmission'] }}:</label>
+            <select id="filter_transmission" name="filter_transmission" onchange="applyFilter()">
+                <option value="" {% if not request.args.get('filter_transmission') %}selected{% endif %}>{{ translations['all'] }}</option>
+                <option value="Automatic" {% if request.args.get('filter_transmission') == 'Automatic' %}selected{% endif %}>{{ translations['automatic'] }}</option>
+                <option value="Manual" {% if request.args.get('filter_transmission') == 'Manual' %}selected{% endif %}>{{ translations['manual'] }}</option>
+            </select>
+        </div>
+    </div>
+
+    {% if cars %}
+    <div class="car-list">
+        {% for car in cars %}
+        <div class="car-item">
+            <img src="{{ url_for('static', filename=car.image) }}" alt="{{ car.name }}" class="car-image">
+            <div class="car-details">
+                <h3><a href="{{ url_for('car_detail', car_id=car.id) }}" class="car-link">{{ car.name }}</a></h3>
+                <ul class="car-info">
+                    <li><strong>{{ translations['transmission'] }}:</strong> {{ car.transmission }}</li>
+                    <li><strong>{{ translations['cost'] }}:</strong> {{ car.cost }}</li>
+                    <li><strong>{{ translations['mileage'] }}:</strong> {{ car.mileage }}</li>
+                    <li><strong>{{ translations['age'] }}:</strong> {{ car.age }}</li>
+                    <li><strong>{{ translations['rental_cost'] }}:</strong> {{ car.rental_cost }}</li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="no-results">{{ translations['no_cars_found'] }}</p>
+    {% endif %}
+</div>
+
+<script>
+    function applySort() {
+        const sortBy = document.getElementById('sort_by').value;
+        const sortOrder = document.getElementById('sort_order').value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('sort_by', sortBy);
+        url.searchParams.set('sort_order', sortOrder);
+        window.location.href = url.toString();
+    }
+
+    function applyFilter() {
+        const transmissionFilter = document.getElementById('filter_transmission').value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('filter_transmission', transmissionFilter);
+        window.location.href = url.toString();
+    }
+</script>
+
+{% endblock %}

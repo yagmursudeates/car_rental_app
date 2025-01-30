@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="car-detail-container">
+    <div class="car-detail-header">
+        <h2 class="car-title">{{ car.name }}</h2>
+    </div>
+
+    <div class="car-info">
+        <div class="car-image-container">
+            <img src="{{ url_for('static', filename=car.image) }}" alt="{{ car.name }}" class="car-image">
+        </div>
+
+        <div class="car-details">
+            <div class="detail-item">
+                <p><strong>Transmission:</strong> {{ car.transmission }}</p>
+            </div>
+            <div class="detail-item">
+                <p><strong>Cost:</strong> ${{ car.cost }}</p>
+            </div>
+            <div class="detail-item">
+                <p><strong>Deposit:</strong> ${{ car.deposit }}</p>
+            </div>
+            <div class="detail-item">
+                <p><strong>Mileage:</strong> {{ car.mileage }} km</p>
+            </div>
+            <div class="detail-item">
+                <p><strong>Age:</strong> {{ car.age }} years</p>
+            </div>
+            <div class="detail-item">
+                <p><strong>Rental Cost:</strong> ${{ car.rental_cost }} per day</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="car-action">
+        <a href="{{ url_for('home') }}" class="back-button">Back to Home</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+<style>
+    .car-detail-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .car-detail-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .car-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .car-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 30px;
+    }
+
+    .car-image-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+    }
+
+    .car-image {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .car-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+    .detail-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px;
+        background-color: #f8f8f8;
+        border-radius: 6px;
+    }
+
+    .detail-item strong {
+        color: #333;
+    }
+
+    .back-button {
+        display: inline-block;
+        background-color: #007BFF;
+        color: #fff;
+        padding: 10px 20px;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 30px;
+    }
+
+    .back-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
